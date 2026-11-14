@@ -18,9 +18,9 @@ block content
               span.task-name(class=val.completed > 0 ? 'completed' : '')= val.task
 
               if val.completed > 0
-                span.status.completed-status Completed
+                span.status.completed-status  | Completed
               else
-                span.status.pending-status Not Completed
+                span.status.pending-status  | Not Completed
 
             .task-actions
               // Edit task form

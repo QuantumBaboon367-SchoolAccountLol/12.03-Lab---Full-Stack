@@ -1,10 +1,130 @@
-/* body {
+/* General Page Styling */
+body {
   padding: 50px;
+  margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #f4f7fb;
+  color: #2d3748;
+  min-height: 100vh;
 }
 
+/* Main Heading */
+h1 {
+  color: #2b3a55;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  color: #344563;
+  margin-top: 30px;
+}
+
+/* Links */
 a {
-  color: #00B7FF;
+  color: #3182ce;
+  text-decoration: none;
 }
-*/
 
+a:hover {
+  color: #2b6cb0;
+  text-decoration: underline;
+}
+
+/* Task List */
+ul {
+  list-style: none;
+  padding: 0;
+  max-width: 650px;
+}
+
+li {
+  background: #ffffff;
+  padding: 18px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.09);
+}
+
+/* Input Fields */
+input {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+}
+
+/* Buttons */
+button {
+  padding: 9px 15px;
+  margin: 4px 2px;
+  border: none;
+  border-radius: 6px;
+  background: #3182ce;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+button:hover {
+  background: #2b6cb0;
+  transform: translateY(-1px);
+}
+
+/* Complete Button */
+button:first-of-type {
+  background: #38a169;
+}
+
+button:first-of-type:hover {
+  background: #2f855a;
+}
+
+/* Delete Button */
+button:last-of-type {
+  background: #e53e3e;
+}
+
+button:last-of-type:hover {
+  background: #c53030;
+}
+
+/* Add Task Section */
+body > h2:last-of-type {
+  margin-top: 35px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  body {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  input {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  li {
+    padding: 14px;
+  }
+}
