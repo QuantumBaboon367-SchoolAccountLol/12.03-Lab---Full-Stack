@@ -17,22 +17,65 @@ router.get('/', function(req, res, next){
   }
 });
 
-router.post('/create', function (req, res, next) {
-    const { task } = req.body;
-    try {
-      req.db.query('INSERT INTO todos (task) VALUES (?);', [task], (err, results) => {
-        if (err) {
-          console.error('Error adding todo:', err);
-          return res.status(500).send('Error adding todo');
-        }
-        console.log('Todo added successfully:', results);
-        // Redirect to the home page after adding
-        res.redirect('/');
-      });
-    } catch (error) {
-      console.error('Error adding todo:', error);
-      res.status(500).send('Error adding todo');
+router.post('/create', function (req, res) {
+    const task = (req.body.task || '').trim();
+
+    // Prevent empty or whitespace-only tasks
+    if (!task) {
+        return res.redirect('/');
     }
+
+    req.db.query(
+        'INSERT INTO todos (task, completed) VALUES (?, 0);',
+        [task],
+        (err, results) => {
+            if (err) {
+                console.error('Error adding todo:', err);
+                return res.status(500).send('Error adding todo');
+            }
+
+            res.redirect('/');
+        }
+    );
+});
+
+router.post('/edit', function (req, res) {
+    const { id } = req.body;
+    const task = (req.body.task || '').trim();
+
+    if (!task) {
+        return res.redirect('/');
+    }
+
+    req.db.query(
+        'UPDATE todos SET task = ? WHERE id = ?;',
+        [task, id],
+        (err, results) => {
+            if (err) {
+                console.error('Error editing todo:', err);
+                return res.status(500).send('Error editing todo');
+            }
+
+            res.redirect('/');
+        }
+    );
+});
+
+router.post('/complete', function (req, res) {
+    const { id } = req.body;
+
+    req.db.query(
+        'UPDATE todos SET completed = 1 WHERE id = ?;',
+        [id],
+        (err, results) => {
+            if (err) {
+                console.error('Error completing todo:', err);
+                return res.status(500).send('Error completing todo');
+            }
+
+            res.redirect('/');
+        }
+    );
 });
 
 router.post('/delete', function (req, res, next) {

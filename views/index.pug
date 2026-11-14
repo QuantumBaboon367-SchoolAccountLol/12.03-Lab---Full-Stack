@@ -1,23 +1,61 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  ol
-  each val in todos
-    li
-      span= val.task + ' - '
-      if val.completed > 0
-        span Completed
-      else
-        span Not Completed
-      form(method='POST' action='/delete')
-        input(type='hidden', name='id', value=val.id)
-        button(type='submit') Delete
+  .container
+    h1= title
+    p.subtitle Manage your daily tasks
 
-  hr
-  h2 Add a new task
-  form(method='POST' action='/create')
-    label(for='task') Task:
-    input(type='text', name='task', id='task', required)
-    button(type='submit') Create Task
+    .task-section
+      h2 Your Tasks
+
+      if todos.length === 0
+        p.empty No tasks yet. Add one below!
+
+      ul.task-list
+        each val in todos
+          li.task-card
+            .task-info
+              span.task-name(class=val.completed > 0 ? 'completed' : '')= val.task
+
+              if val.completed > 0
+                span.status.completed-status Completed
+              else
+                span.status.pending-status Not Completed
+
+            .task-actions
+              // Edit task form
+              form(method='POST' action='/edit')
+                input(type='hidden' name='id' value=val.id)
+                input(
+                  type='text'
+                  name='task'
+                  value=val.task
+                  required
+                  aria-label='Edit task description'
+                )
+                button.edit-btn(type='submit') Edit
+
+              // Complete task button
+              if val.completed === 0
+                form(method='POST' action='/complete')
+                  input(type='hidden' name='id' value=val.id)
+                  button.complete-btn(type='submit') Complete
+
+              // Delete task button
+              form(method='POST' action='/delete')
+                input(type='hidden' name='id' value=val.id)
+                button.delete-btn(type='submit') Delete
+
+    .add-section
+      h2 Add a New Task
+
+      form(method='POST' action='/create' class='add-form')
+        label(for='task') Task Description
+        input(
+          type='text'
+          name='task'
+          id='task'
+          placeholder='What do you need to accomplish?'
+          required
+        )
+        button(type='submit') Add Task
